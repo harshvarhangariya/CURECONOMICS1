@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Cureconomics: an interactive 3D lab for Logistic and Gompertz growth models, built by CalSymPy Team 12.">
+<meta name="theme-color" content="#04060f">
+<title>Cureconomics | 3D Growth Modelling Lab</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%238b7cff'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' fill='%2304060f' font-family='Arial' font-weight='700'%3EC%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+<div class="ld" id="loader" role="status"><div class="ld-word">CUREECONOMICS</div><div class="ld-bar"><i></i></div><small>Calibrating growth models…</small></div>
+<canvas id="bg" aria-hidden="true"></canvas>
+
+<header class="nav" id="nav">
+  <a class="brand" href="#home"><b>C</b>CUREECONOMICS</a>
+  <nav id="menu" aria-label="Main">
+    <a href="#home">Home</a><a href="#models">Growth models</a><a href="#analyzer">Analyzer</a><a href="#maths">Mathematics</a><a href="#python">Python</a><a href="#team">Team</a>
+  </nav>
+  <a class="btn sm" href="#analyzer" style="display:var(--cta,inline-flex)">Launch analyzer</a>
+  <button id="navBtn" aria-label="Open menu" aria-expanded="false" aria-controls="menu">☰</button>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div class="hero-3d"><canvas id="heroCanvas" aria-label="3D animated Logistic and Gompertz growth curves"></canvas></div>
+  <div class="hero-copy">
+    <p class="tag hl">CalSymPy Team 12 · Calculus + Python</p>
+    <h1 class="hl">CUREECONOMICS</h1>
+    <p class="tagline hl">Understand Growth. Predict What’s Next.</p>
+    <p class="sub hl">Explore mathematical growth models, analyze real-world observations and generate future predictions using Logistic and Gompertz models.</p>
+    <div class="cta hl"><a class="btn pri" href="#models">Explore Growth Models</a><a class="btn" href="#analyzer">Launch Interactive Analyzer</a></div>
+  </div>
+  <div class="hero-stats">
+    <div><b data-count="2">0</b><span>Growth models</span></div>
+    <div><b data-count="3">0</b><span>Error metrics</span></div>
+    <div><b data-count="3">0</b><span>Fitted parameters</span></div>
+    <div><b data-count="5">0</b><span>Python libraries</span></div>
+    <div><b data-count="8">0</b><span>Team members</span></div>
+  </div>
+</section>
+
+<section class="sec" id="models">
+  <div class="sh rv"><p class="tag">Growth models</p><h2>Two S-curves, in three dimensions.</h2><p>Real growth starts slowly, speeds up, then levels off at a limit. Drag a model to rotate it. The depth axis shows how the curve changes as the rate r changes.</p></div>
+  <div class="vgrid">
+    <article class="viewer glass rv" data-v="L">
+      <div class="vc"><canvas aria-label="3D Logistic growth curve"></canvas><div class="vtools"><button data-act="replay" aria-label="Replay animation">↺</button><button data-act="in" aria-label="Zoom in">+</button><button data-act="out" aria-label="Zoom out">−</button><button data-act="reset" aria-label="Reset view">⌂</button></div><span class="vhint">Drag to rotate · Ctrl+scroll or +/− to zoom</span></div>
+      <div class="vinfo"><h3 class="l">Logistic growth</h3>
+        <div class="eq">N(t) =<span class="fr"><i class="k">K</i><i>1 + A·e<sup>−rt</sup></i></span></div>
+        <p class="small">Growth slows in proportion to N/K. The curve is symmetric around its fastest-growth point.</p>
+        <ul class="facts"><li>Carrying capacity <b class="k">K</b> is the amber plane the curve approaches.</li><li>Fastest growth at N = K/2 (t ≈ 4.39 for K=100, r=0.5, N₀=10).</li><li>A = (K − N₀) / N₀</li></ul></div>
+    </article>
+    <article class="viewer glass rv" data-v="G">
+      <div class="vc"><canvas aria-label="3D Gompertz growth curve"></canvas><div class="vtools"><button data-act="replay" aria-label="Replay animation">↺</button><button data-act="in" aria-label="Zoom in">+</button><button data-act="out" aria-label="Zoom out">−</button><button data-act="reset" aria-label="Reset view">⌂</button></div><span class="vhint">Drag to rotate · Ctrl+scroll or +/− to zoom</span></div>
+      <div class="vinfo"><h3 class="g">Gompertz growth</h3>
+        <div class="eq">N(t) = <span class="k">K</span>·e<sup>−A·e<sup>−rt</sup></sup></div>
+        <p class="small">Growth slows logarithmically in K/N. The curve is asymmetric: it rises fast early and approaches K more gradually.</p>
+        <ul class="facts"><li>Fastest growth at N = K/e ≈ 36.8 (t ≈ 1.67 for the same inputs).</li><li>Reaches its peak rate earlier than the Logistic curve.</li><li>A = ln(K / N₀)</li></ul></div>
+    </article>
+    <article class="viewer glass wide rv" data-v="C">
+      <div class="vc"><canvas aria-label="3D comparison of Logistic and Gompertz curves"></canvas><div class="vtools"><button data-act="replay" aria-label="Replay animation">↺</button><button data-act="in" aria-label="Zoom in">+</button><button data-act="out" aria-label="Zoom out">−</button><button data-act="reset" aria-label="Reset view">⌂</button></div><span class="vhint">Amber dots are the sample observations</span></div>
+      <div class="vinfo"><h3>Comparison mode</h3>
+        <p class="small"><span class="l">Logistic</span> and <span class="g">Gompertz</span> side by side. Change the parameters and both curves rebuild instantly.</p>
+        <div class="sliders">
+          <div><label for="cK">Capacity K <b id="cKv">100</b></label><input type="range" id="cK" min="60" max="130" value="100"></div>
+          <div><label for="cR">Rate r <b id="cRv">0.50</b></label><input type="range" id="cR" min="0.2" max="1.2" step="0.05" value="0.5"></div>
+          <div><label for="cN">Start N₀ <b id="cNv">10</b></label><input type="range" id="cN" min="2" max="40" value="10"></div>
+        </div>
+        <ul class="facts"><li>Same K, r and N₀ give different shapes because the slowing term differs.</li></ul></div>
+    </article>
+  </div>
+</section>
+
+<section class="sec" id="analyzer">
+  <div class="sh rv"><p class="tag">Interactive analyzer</p><h2>Fit both models to your data.</h2><p>Enter observations, fit Logistic and Gompertz curves by least squares, compare RMSE, MAE and R², and forecast ahead. Every number is computed live in your browser.</p></div>
+  <div class="agrid">
+    <div class="panel glass rv">
+      <h3>Your observations</h3><p class="hint">Enter matching time and measurement values.</p>
+      <label for="times">Time values</label>
+      <input type="text" id="times" value="0, 1, 2, 4, 6, 8, 10, 12" spellcheck="false" autocomplete="off">
+      <label for="values">Measured size / index</label>
+      <input type="text" id="values" value="10, 15.5, 23.2, 45.1, 69.1, 85.8, 94.3, 97.8" spellcheck="false" autocomplete="off">
+      <p class="hint">Comma-separated numbers. At least four observations. Time must be increasing; measurements must be above zero.</p>
+      <label for="steps">Forecast horizon <b id="stepValue">5 steps</b></label>
+      <input type="range" id="steps" min="1" max="20" value="5">
+      <button class="btn pri full" id="analyzeBtn" style="margin-top:14px">Fit models &amp; forecast</button>
+      <button class="sample" id="sampleBtn">↻ Restore sample dataset</button>
+      <div class="disc">Educational demonstration only. Not a medical diagnostic tool or financial advice.</div>
+      <div id="errorBox" class="error" role="alert" hidden></div>
+    </div>
+    <div class="panel glass rv">
+      <div class="rtop"><div><h3 id="resultTitle">Ready to analyze</h3><p class="small" id="resultSub">The sample dataset is analyzed when the page loads.</p></div><span class="status" id="status">SAMPLE DATA</span></div>
+      <div class="chart-wrap"><canvas id="growthChart" aria-label="Chart of observations, fitted Logistic and Gompertz curves and forecast"></canvas></div>
+      <div class="mgrid" id="metricGrid"></div>
+      <div class="pgrid" id="paramGrid"></div>
+      <div class="fbox"><small id="forecastCaption">Generated after model fitting</small><div id="forecastList" class="chips"><span class="small">No forecast generated yet.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="maths">
+  <div class="sh rv"><p class="tag">Mathematical foundation</p><h2>The calculus behind the curves.</h2><p>Four ideas from the syllabus build, solve and fit the models. Each lab below runs real calculations.</p></div>
+  <div class="cgrid">
+    <div class="card glass hv rv"><div class="ic">d/dt</div><h4>Derivatives</h4><p>The slope of N(t) is the growth rate. Where d²N/dt² = 0, growth is fastest.</p></div>
+    <div class="card glass hv rv"><div class="ic">∂</div><h4>Partial derivatives</h4><p>How the fitting error changes when only K, r or A moves.</p></div>
+    <div class="card glass hv rv"><div class="ic">∫</div><h4>Integration</h4><p>Adding up the growth rate from 0 to t rebuilds the growth curve.</p></div>
+    <div class="card glass hv rv"><div class="ic">Σ</div><h4>Least squares</h4><p>The best fit minimises the sum of squared differences S(K, r, A).</p></div>
+  </div>
+
+  <div class="lab glass rv">
+    <h3>Lab 1: derivative and integral</h3>
+    <p>Move t. The left graph shows N(t) with its tangent line (the derivative). The right graph shows the growth rate dN/dt, shaded from 0 to t (the integral). The shaded area equals N(t) − N₀.</p>
+    <div class="seg" id="calcKinds"><button class="on" data-k="L">Logistic</button><button data-k="G">Gompertz</button></div>
+    <label for="calcT">Time t <b id="calcTv">4.0</b></label><input type="range" id="calcT" min="0" max="14" step="0.1" value="4">
+    <div class="lab-grid"><canvas class="cv" id="calcA" aria-label="N(t) with tangent line"></canvas><canvas class="cv" id="calcB" aria-label="dN/dt with shaded area"></canvas></div>
+    <div class="read"><div>N(t)<b id="cN1">–</b></div><div>dN/dt (formula)<b id="cD1">–</b></div><div>dN/dt (numeric slope)<b id="cD2">–</b></div><div>∫₀ᵗ dN/dt (numeric)<b id="cI1">–</b></div><div>N(t) − N₀<b id="cI2">–</b></div></div>
+  </div>
+
+  <div class="steps">
+    <div class="card glass rv"><h3 class="l">Solving the Logistic equation</h3><ol>
+      <li>Start from the rate law<div class="eq">dN/dt = rN(1 − N/K)</div></li>
+      <li>Separate variables and integrate<div class="eq">∫ dN / [N(1 − N/K)] = ∫ r dt</div></li>
+      <li>Partial fractions, then integrate<div class="eq">ln( N / (K − N) ) = rt + C</div></li>
+      <li>Use N(0) = N₀ to fix A<div class="eq">N(t) = K / (1 + A·e<sup>−rt</sup>), A = (K − N₀)/N₀</div></li></ol></div>
+    <div class="card glass rv"><h3 class="g">Solving the Gompertz equation</h3><ol>
+      <li>Start from the rate law<div class="eq">dN/dt = rN·ln(K/N)</div></li>
+      <li>Substitute u = ln(N/K), so the equation becomes linear<div class="eq">du/dt = −r·u</div></li>
+      <li>Solve the simple decay equation<div class="eq">u = u₀·e<sup>−rt</sup>, N = K·e<sup>u</sup></div></li>
+      <li>Use N(0) = N₀ to fix A<div class="eq">N(t) = K·e<sup>−A·e<sup>−rt</sup></sup>, A = ln(K/N₀)</div></li></ol></div>
+  </div>
+
+  <div class="lab glass rv">
+    <h3>Lab 2: partial derivatives and least squares</h3>
+    <p>The heat map shows the squared error S(K, r) for the Logistic model on the sample data (A is fixed by N₀ = 10). Click or drag to move the probe. The partial derivatives ∂S/∂K and ∂S/∂r tell you which way is downhill. The minimum is where both are zero.</p>
+    <canvas class="cv ls" id="lsCanvas" aria-label="Error surface heat map with draggable probe"></canvas>
+    <div class="read"><div>K<b id="lK">–</b></div><div>r<b id="lR">–</b></div><div>S(K, r)<b id="lS">–</b></div><div>∂S/∂K<b id="lDK">–</b></div><div>∂S/∂r<b id="lDR">–</b></div></div>
+    <div class="cta" style="margin-top:14px"><button class="btn sm pri" id="lsGo">Descend to minimum</button><button class="btn sm" id="lsReset">Reset probe</button></div>
+  </div>
+
+  <div class="pm">
+    <div class="glass hv rv"><b>K</b><span>Carrying capacity: the upper limit</span></div>
+    <div class="glass hv rv"><b>r</b><span>Growth-rate parameter</span></div>
+    <div class="glass hv rv"><b>A</b><span>Shape set by the starting value N₀</span></div>
+    <div class="glass hv rv"><b>t</b><span>Time variable</span></div>
+  </div>
+</section>
+
+<section class="sec" id="python">
+  <div class="sh rv"><p class="tag">Code and computation</p><h2>The Python pathway.</h2><p>This is how the same workflow is written in Python for the academic implementation. Pick a library to see its role and code.</p></div>
+  <div class="pytabs rv" id="pyTabs" role="tablist">
+    <button class="on" data-k="numpy">NumPy</button><button data-k="pandas">Pandas</button><button data-k="scipy">SciPy</button><button data-k="sympy">SymPy</button><button data-k="matplotlib">Matplotlib</button><button data-k="full">Full pipeline</button>
+  </div>
+  <div class="pyview rv">
+    <div class="pyinfo glass"><h3 id="pyT"></h3><p id="pyD"></p><div class="js-note" id="pyJ"></div></div>
+    <div class="codebox"><div class="codebar"><i></i><i></i><i></i><span id="pyF">analysis.py</span><button id="pyCopy">Copy</button></div><pre><code id="pyCode"></code></pre></div>
+  </div>
+  <div class="flow rv"><span>NumPy prepares data</span>→<span>Pandas organises it</span>→<span>SciPy fits models</span>→<span>SymPy checks the calculus</span>→<span>Matplotlib plots</span></div>
+  <p class="warn rv"><b>Important:</b> GitHub Pages cannot run Python. The live analyzer on this site is written in JavaScript (script.js). It uses the same mathematics: least-squares fitting, RMSE, MAE and R². The Python code shown here is the academic implementation pathway.</p>
+</section>
+
+<section class="sec" id="team">
+  <div class="sh rv"><p class="tag">CalSymPy Team 12</p><h2>The team behind Cureconomics.</h2><p>Eight students, one project: from the mathematical model to the deployed website.</p></div>
+  <div class="tgrid">
+    <article class="tm glass hv lead rv"><div class="av"><span>NP</span><img src="assets/team/naman-pareek.jpg" alt="Naman Pareek" loading="lazy" onerror="this.remove()"></div><h3>Naman Pareek</h3><em>Mentor</em><p>Guides the team’s direction and reviews the mathematics and the method.</p></article>
+    <article class="tm glass hv rv"><div class="av"><span>KT</span><img src="assets/team/kushagra-tiwari.jpg" alt="Kushagra Tiwari" loading="lazy" onerror="this.remove()"></div><h3>Kushagra Tiwari</h3><em>Mathematical Modeler</em><p>Derives the Logistic and Gompertz models from their differential equations.</p></article>
+    <article class="tm glass hv rv"><div class="av"><span>NP</span><img src="assets/team/nikhil-prasad.jpg" alt="Nikhil Prasad" loading="lazy" onerror="this.remove()"></div><h3>Nikhil Prasad</h3><em>Information Analyst</em><p>Organises the data and interprets what the fitted results mean.</p></article>
+    <article class="tm glass hv rv"><div class="av"><span>AG</span><img src="assets/team/aviraj-gupta.jpg" alt="Aviraj Gupta" loading="lazy" onerror="this.remove()"></div><h3>Aviraj Gupta</h3><em>Pseudo Code Developer</em><p>Turns the method into a clear step-by-step algorithm and flowchart.</p></article>
+    <article class="tm glass hv rv"><div class="av"><span>SS</span><img src="assets/team/shashank-sagar.jpg" alt="Shashank Sagar" loading="lazy" onerror="this.remove()"></div><h3>Shashank Sagar</h3><em>Researcher</em><p>Gathers the references and background for tumor and economic growth.</p></article>
+    <article class="tm glass hv rv"><div class="av"><span>HG</span><img src="assets/team/harshvardhan-gariya.jpg" alt="Harshvardhan Gariya" loading="lazy" onerror="this.remove()"></div><h3>Harshvardhan Gariya</h3><em>Programme Deployer</em><p>Packages the project and publishes it so anyone can open it.</p></article>
+    <article class="tm glass hv rv"><div class="av"><span>AS</span><img src="assets/team/anuj-singh.jpg" alt="Anuj Singh" loading="lazy" onerror="this.remove()"></div><h3>Anuj Singh</h3><em>Code Developer</em><p>Writes the fitting, error-metric and forecasting code.</p></article>
+    <article class="tm glass hv rv"><div class="av"><span>KC</span><img src="assets/team/kopalli-chiruvamsi.jpg" alt="Kopalli Chiruvamsi" loading="lazy" onerror="this.remove()"></div><h3>Kopalli Chiruvamsi</h3><em>Project Manager</em><p>Plans the schedule, runs the meetings and keeps the work on track.</p></article>
+  </div>
+</section>
+
+<section class="sec" id="limits">
+  <div class="sh rv"><p class="tag">Use responsibly</p><h2>What a forecast can tell us.</h2></div>
+  <div class="lgrid">
+    <div class="card glass hv rv"><b>Data matters</b><p>Few or noisy observations make the fitted K, r and A uncertain, so forecasts are sensitive.</p></div>
+    <div class="card glass hv rv"><b>Models simplify reality</b><p>A single S-curve cannot capture sudden shocks such as a treatment change or a recession.</p></div>
+    <div class="card glass hv rv"><b>Forecasts are estimates</b><p>The uncertainty band assumes roughly normal residuals with constant spread. Treat it as an indicative range, not a clinical or financial conclusion.</p></div>
+  </div>
+</section>
+</main>
+
+<footer><a class="brand" href="#home"><b>C</b>CUREECONOMICS</a><span>CalSymPy Team 12 · Educational demonstration · Not medical or financial advice</span></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
